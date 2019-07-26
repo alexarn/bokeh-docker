@@ -1,0 +1,73 @@
+# MariaDB-specific config file.
+# Read by /etc/mysql/my.cnf
+
+[client]
+# Default is Latin1, if you need UTF-8 set this (also in server section)
+#default-character-set = utf8
+
+[mysqld]
+#
+# * Character sets
+#
+# Default is Latin1, if you need UTF-8 set all this (also in client section)
+#
+
+default-storage-engine  = MyISAM
+port                    = 3306
+character-set-server    = utf8
+collation-server        = utf8_general_ci
+default_time_zone	= 'Europe/Paris'
+
+# MyISAM #
+key_buffer_size         = 1G
+myisam-recover          = FORCE,BACKUP
+
+# SAFETY #
+skip-external-locking
+skip-name-resolve
+skip-character-set-client-handshake
+max-connections         = 150
+lower_case_table_names  = 1
+performance_schema      = 0
+
+# DISABLE UNUSED ENGINES
+skip-innodb
+
+# FULL TEXT SEARCH CONFIG
+ft_min_word_len         = 1
+ft_stopword_file        = /dev/null
+
+# CACHES AND LIMITS #
+max_allowed_packet      = 64M
+sort_buffer_size        = 8M
+read_buffer_size        = 8M
+read_rnd_buffer_size    = 2M
+join_buffer_size        = 8M
+myisam_sort_buffer_size = 128M
+tmp-table-size          = 200M
+max-heap-table-size     = 200M
+tmpdir                  = /tmp
+max-tmp-tables          = 500
+#aria_block_size         = 1024
+query-cache-type        = 1
+query-cache-size        = 64M
+query_cache_limit       = 2M
+query_cache_min_res_unit = 4096
+query_cache_strip_comments = 1
+thread-cache-size       = 64
+#open-files-limit        = 65535
+open-files-limit        = 131070
+table-definition-cache  = 4096
+table_open_cache        = 131072
+key_cache_segments      = 64
+
+# LOGGING #
+slow_query_log                 = 0
+slow_query_log_file            = /var/log/mysql/mariadb-slow.log
+long_query_time                = 15
+log_slow_verbosity             = query_plan
+log-error                      = /var/log/mysql/mariadb_error.log
+general-log                    = 0
+general-log-file               = /var/log/mysql/mariadb.log
+log-warnings                   = 0
+log-queries-not-using-indexes  = 1
