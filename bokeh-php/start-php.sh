@@ -6,8 +6,8 @@ function main {
 	if [ -z "$(ls -A /home/webmaster/${install_dir}/conf/php)" ]
 	then
 		echo "[BOKEH-PHP] Install PHP conf files..."
-		mv /tmp/bokeh-php-fpm.conf /home/webmaster/${install_dir}/conf/php/
-		mv /tmp/bokeh-pool.conf /home/webmaster/${install_dir}/conf/php/
+		cp -p /tmp/bokeh-php-fpm.conf /home/webmaster/${install_dir}/conf/php/
+		cp -p /tmp/bokeh-pool.conf /home/webmaster/${install_dir}/conf/php/
 		sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/php/bokeh-php-fpm.conf
 		sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/php/bokeh-pool.conf
 	fi

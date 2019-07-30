@@ -63,11 +63,11 @@ key_cache_segments      = 64
 
 # LOGGING #
 slow_query_log                 = 0
-slow_query_log_file            = /var/log/mysql/mariadb-slow.log
+slow_query_log_file            = /home/webmaster/INSTALLDIR/log/mysql/mariadb-slow.log
 long_query_time                = 15
 log_slow_verbosity             = query_plan
-log-error                      = /var/log/mysql/mariadb_error.log
+log-error                      = /home/webmaster/INSTALLDIR/log/mysql/mariadb_error.log
 general-log                    = 0
-general-log-file               = /var/log/mysql/mariadb.log
+general-log-file               = /home/webmaster/INSTALLDIR/log/mysql/mariadb.log
 log-warnings                   = 0
 log-queries-not-using-indexes  = 1
