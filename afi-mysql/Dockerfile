@@ -17,7 +17,8 @@ RUN sed -i '/fr_FR\.UTF/s/^# //g' /etc/locale.gen \
     && sed -i '/en_US\.UTF/s/^# //g' /etc/locale.gen \
     && locale-gen
 
-RUN usermod -u 500 mysql && groupmod -g 500 mysql
+RUN usermod -u 500 mysql && groupmod -g 500 mysql && usermod -d /home/webmaster mysql
+RUN chown 500:500 /var/lib/mysql && chown 500:500 /var/run/mysqld && chown 500 /var/log/mysql
 
 EXPOSE 3306
 

@@ -5,10 +5,12 @@ ENV install_dir=www
 ENV db_name=etalon
 ENV MYSQL_ROOT_PASSWORD=root
 
-COPY my.cnf /etc/mysql/my.cnf
+COPY my.cnf /tmp/my.cnf
 COPY bokeh.cnf /tmp/bokeh.cnf
+RUN chown mysql:mysql /tmp/*.cnf
 COPY bokeh.sql /tmp/bokeh.sql
-COPY init-mysql.sh /tmp/init-mysql.sh
-RUN bash /tmp/init-mysql.sh
+COPY my.sh /tmp/my.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 3306
