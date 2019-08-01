@@ -40,7 +40,7 @@ RUN pecl install imagick-3.4.3RC1 \
     && pecl install memcached \
     && pecl install xdebug-2.6.0
 
-RUN cd /root && git clone "https://github.com/tideways/php-xhprof-extension.git" && cd php-xhprof-extension \
+RUN cd /root && git clone "https://github.com/longxinH/xhprof" && cd xhprof/extension/ \
     && phpize \
     && ./configure \
     && make \
@@ -49,7 +49,7 @@ RUN cd /root && git clone "https://github.com/tideways/php-xhprof-extension.git"
 RUN docker-php-ext-enable imagick \
     && docker-php-ext-enable memcached \
     && docker-php-ext-enable xdebug \
-    && docker-php-ext-enable tideways_xhprof
+    && docker-php-ext-enable xhprof
 
 RUN docker-php-ext-install mysqli mcrypt gettext calendar zip soap \
     && docker-php-ext-install -j$(nproc) iconv \
