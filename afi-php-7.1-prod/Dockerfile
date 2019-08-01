@@ -8,7 +8,7 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 RUN sed -i 's/main/main contrib non-free/g' /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y --no-install-recommends apt-utils apt-transport-https
-RUN apt-get install -y --no-install-recommends curl wget lsb-release vim sudo rsync tzdata locales openssl libapr1-dev libssl-dev
+RUN apt-get install -y --no-install-recommends curl wget iputils-ping dnsutils lsb-release vim sudo rsync tzdata locales openssl libapr1-dev libssl-dev
 
 RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
     && dpkg-reconfigure --frontend noninteractive tzdata
@@ -38,10 +38,8 @@ RUN apt-get update -yqq \
 
 RUN pecl install imagick-3.4.3RC1 \
     && pecl install memcached \
-    && pecl install xdebug-2.6.0 \
     && docker-php-ext-enable imagick \
     && docker-php-ext-enable memcached \
-    && docker-php-ext-enable xdebug \
     && docker-php-ext-install mysqli mcrypt gettext calendar zip soap \
     && docker-php-ext-install -j$(nproc) iconv \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \

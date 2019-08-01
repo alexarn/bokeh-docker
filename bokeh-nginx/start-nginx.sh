@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function main {
+	usermod -u ${uid} webmaster && groupmod -g ${uid} webmaster
         su -l webmaster -c "bash /tmp/init-site.sh ${install_dir} ${url} ${db_host} ${db_name} ${db_user} ${db_pwd}"
 
         if [ -z "$(ls -A /home/webmaster/${install_dir}/conf/nginx)" ]

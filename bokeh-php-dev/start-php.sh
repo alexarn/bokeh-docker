@@ -1,6 +1,8 @@
 #!/bin/bash
 
 function main {
+	usermod -u ${uid} webmaster && groupmod -g ${uid} webmaster
+	chown webmaster:www-data /usr/local/lib/php/sessions
 	su -l webmaster -c "bash /tmp/init-php.sh ${install_dir}"
 
 	if [ -z "$(ls -A /home/webmaster/${install_dir}/conf/php)" ]

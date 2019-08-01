@@ -8,7 +8,7 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 RUN sed -i 's/main/main contrib non-free/g' /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y --no-install-recommends apt-utils apt-transport-https
-RUN apt-get install -y --no-install-recommends curl wget lsb-release vim sudo mysql-client rsync tzdata locales openssl libapr1-dev libssl-dev
+RUN apt-get install -y --no-install-recommends curl wget iputils-ping dnsutils lsb-release vim sudo mysql-client rsync tzdata locales openssl libapr1-dev libssl-dev
 
 RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
     && dpkg-reconfigure --frontend noninteractive tzdata
@@ -17,8 +17,7 @@ RUN sed -i '/fr_FR\.UTF/s/^# //g' /etc/locale.gen \
     && sed -i '/en_US\.UTF/s/^# //g' /etc/locale.gen \
     && locale-gen
 
-RUN usermod -u 500 mysql && groupmod -g 500 mysql && usermod -d /home/webmaster mysql
-RUN chown 500:500 /var/lib/mysql && chown 500:500 /var/run/mysqld && chown 500 /var/log/mysql
+RUN echo "mysql ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 EXPOSE 3306
 

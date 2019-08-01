@@ -1,6 +1,7 @@
 FROM afi-nginx:latest
 MAINTAINER AFI SA - Luc Deuffic <ldeuffic@afi-sa.fr>
 
+ENV uid=500
 ENV install_dir=www
 ENV url=bokeh.local
 ENV db_host=bokeh.local
@@ -16,7 +17,6 @@ COPY install-util.sh /tmp/install-util.sh
 COPY init-site.sh /tmp/init-site.sh
 COPY start-nginx.sh /start-nginx.sh
 
-EXPOSE 80
-EXPOSE 443
+EXPOSE 80 443
 
 ENTRYPOINT ["bash", "/start-nginx.sh"]

@@ -1,13 +1,14 @@
 FROM afi-mysql:latest
 MAINTAINER AFI SA - Luc Deuffic <ldeuffic@afi-sa.fr>
 
+ENV uid=500
 ENV install_dir=www
 ENV db_name=etalon
 ENV MYSQL_ROOT_PASSWORD=root
 
 COPY my.cnf /tmp/my.cnf
 COPY bokeh.cnf /tmp/bokeh.cnf
-RUN chown mysql:mysql /tmp/*.cnf
+RUN chown mysql:mysql /tmp/*.cnf && chmod +w /tmp/*.cnf
 COPY bokeh.sql /tmp/bokeh.sql
 COPY my.sh /tmp/my.sh
 COPY docker-entrypoint.sh /docker-entrypoint.sh

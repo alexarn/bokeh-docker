@@ -45,7 +45,7 @@ function createSymLinks() {
     switchSymLinks $client_dir $absolute_current_dir
     forceExecuteCommand "ln -fs $absolute_current_dir/local.php $client_dir/local.php && \
  ln -fs $absolute_current_dir/.htaccess  $client_dir/.htaccess && \
- ln -fs $absolute_current_dir/cosmogramme/.htaccess  $client_dir/cosmogramme/.htaccess" "can't link to $absolute_current_dir" "Unable_to_link_file_in_$client_dir"
+ ln -fs ../$absolute_current_dir/cosmogramme/.htaccess  $client_dir/cosmogramme/.htaccess" "can't link to ../$absolute_current_dir" "Unable_to_link_file_in_$client_dir"
 }
 
 function switchSymLinks() {
@@ -63,14 +63,14 @@ function switchSymLinks() {
  ln -fs $absolute_current_dir/xhprof $client_dir/ && \
  ln -fs $absolute_current_dir/scripts $client_dir/ && \
  ln -fs $absolute_current_dir/.htaccess  $client_dir/.htaccess && \
- ln -fs $absolute_current_dir/cosmogramme/.htaccess  $client_dir/cosmogramme/.htaccess && \
- ln -fs $absolute_current_dir/cosmogramme/index.php $client_dir/cosmogramme/index.php && \
- ln -fs $absolute_current_dir/cosmogramme/cosmozend $client_dir/cosmogramme/ && \
- ln -fs $absolute_current_dir/cosmogramme/css $client_dir/cosmogramme/ && \
- ln -fs $absolute_current_dir/cosmogramme/images $client_dir/cosmogramme/ && \
- ln -fs $absolute_current_dir/cosmogramme/java_script $client_dir/cosmogramme/ && \
- ln -fs $absolute_current_dir/cosmogramme/php $client_dir/cosmogramme/ && \
- ln -fs $absolute_current_dir/cosmogramme/sql $client_dir/cosmogramme/" "can't link to $absolute_current_dir" "Unable_to_link_file_in_$client_dir"
+ ln -fs ../$absolute_current_dir/cosmogramme/.htaccess  $client_dir/cosmogramme/.htaccess && \
+ ln -fs ../$absolute_current_dir/cosmogramme/index.php $client_dir/cosmogramme/index.php && \
+ ln -fs ../$absolute_current_dir/cosmogramme/cosmozend $client_dir/cosmogramme/ && \
+ ln -fs ../$absolute_current_dir/cosmogramme/css $client_dir/cosmogramme/ && \
+ ln -fs ../$absolute_current_dir/cosmogramme/images $client_dir/cosmogramme/ && \
+ ln -fs ../$absolute_current_dir/cosmogramme/java_script $client_dir/cosmogramme/ && \
+ ln -fs ../$absolute_current_dir/cosmogramme/php $client_dir/cosmogramme/ && \
+ ln -fs ../$absolute_current_dir/cosmogramme/sql $client_dir/cosmogramme/" "can't link to ../$absolute_current_dir" "Unable_to_link_file_in_$client_dir"
 }
 
 

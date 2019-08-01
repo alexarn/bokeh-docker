@@ -43,7 +43,7 @@ function main {
                 cp -p /home/webmaster/${install_dir}/php/bokeh/config.ini.default /home/webmaster/${install_dir}/htdocs/${url}/config.ini
                 cp -p /home/webmaster/${install_dir}/php/bokeh/cosmogramme/config.ref.php /home/webmaster/${install_dir}/htdocs/${url}/cosmogramme/config.php
                 source /home/webmaster/${install_dir}/php/install-util.sh
-		createSymLinks /home/webmaster/${install_dir}/htdocs/${url} /home/webmaster/${install_dir}/php/bokeh
+		createSymLinks /home/webmaster/${install_dir}/htdocs/${url} ../../php/bokeh
 		updateConfig ${db_user} ${db_pwd} ${db_name} /home/webmaster/${install_dir}/htdocs/${url} ${db_host}
 
 		echo "[BOKEH-NGINX] Clone initial skin..."

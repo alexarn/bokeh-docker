@@ -64,14 +64,17 @@ _get_config() {
 	# match "datadir      /some/path with/spaces in/it here" but not "--xyz=abc\n     datadir (xyz)"
 }
 
-# AFI - 20190730 : ldeuffic@afi-sa.fr
+# AFI ADD-ON --- 20190730 : ldeuffic@afi-sa.fr
 # change value to /etc/mysql/my.cnf
 _set_config() {
 	file_env 'install_dir'
 	file_env 'db_name'
+	file_env 'uid'
+
+	sudo usermod -u $uid mysql && sudo groupmod -g $uid mysql
+	sudo chown mysql:mysql /tmp/*.cnf && sudo chown mysql:mysql /var/lib/mysql && sudo chown mysql /var/run/mysqld && sudo chown mysql /var/log/mysql
+
 	if ! [ -z "$install_dir" ]; then
-		whoami
-		ls -lha /tmp
 		sed -i "s:INSTALLDIR:$install_dir:g" /tmp/*.cnf
 	else
 		echo >&2 'info: no specific config available '

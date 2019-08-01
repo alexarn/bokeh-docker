@@ -1,6 +1,7 @@
-FROM afi-php-7.1:latest
+FROM afi-php-7.1-prod:latest
 MAINTAINER AFI SA - Luc Deuffic <ldeuffic@afi-sa.fr>
 
+ENV uid=500
 ENV install_dir=www
 
 COPY php.ini /usr/local/etc/php/php.ini
