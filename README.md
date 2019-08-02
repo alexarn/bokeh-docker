@@ -71,12 +71,12 @@ docker pull memcached
 This will clone the Bokeh project in *www* subdirectory ( *install_dir* param ). In order to set files ownership to the you account, use the *uid* param as follow. 
 ```
 cd your/work/space/
-docker run -d -p 9000:9000 --name bokeh-php-userid -h bokeh-php-lla -e install_dir=www -e uid=$(id -u) -v $(pwd)/:/home/webmaster/ bokeh-php-7.1-dev
+docker run -d -p 9000:9000 --name my-bokeh-dev -h bokeh-php-7.1-dev -e install_dir=www -e uid=$(id -u) -v $(pwd)/:/home/webmaster/ bokeh-php-7.1-dev
 ```
 
 ### Check the logs
 ```
-docker logs bokeh-php-lla --follow
+docker logs my-bokeh-dev --follow
 ```
 
 
