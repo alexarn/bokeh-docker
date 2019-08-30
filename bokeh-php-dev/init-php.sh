@@ -17,6 +17,10 @@ function main {
 		mkdir -p /home/webmaster/${install_dir}/scripts
 		mkdir -p /home/webmaster/${install_dir}/temp
 		chmod 777 /home/webmaster/${install_dir}/temp
+	fi
+
+	if [ ! -a /home/webmaster/${install_dir}/php/install-util.sh ]
+	then
 		cp /tmp/install-util.sh /home/webmaster/${install_dir}/php/
 		chown webmaster:webmaster /home/webmaster/${install_dir}/php/*.sh
 	fi

@@ -1,0 +1,65 @@
+version: '3.3'
+
+networks:
+  bokeh0:
+    external: true
+
+services:
+  bokeh_mysql:
+    image: bokeh-mysql
+    container_name: ${MYSQLHOST}
+    hostname: ${MYSQLHOST}
+    networks:
+      - bokeh0
+    ports:
+      - "3306:3306"
+    volumes:
+        - "${PWD}:/home/webmaster"
+    environment:
+        - "MYSQL_ROOT_PASSWORD=${MYSQLPWD}"
+        - "install_dir=${INSTALLDIR}"
+        - "uid=${USERID}"
+
+  bokeh_php:
+    image: bokeh-php-prod
+    container_name: ${PHPHOST}
+    hostname: ${PHPHOST}
+    networks:
+      - bokeh0
+    ports:
+      - "9000:9000"
+    volumes:
+        - "${PWD}:/home/webmaster"
+    environment:
+        - "install_dir=${INSTALLDIR}"
+        - "uid=${USERID}"
+        - "memcache_host=${MEMCACHEHOST}"
+        - "WAIT_HOSTS=${MYSQLHOST}:3306"
+        - "WAIT_HOSTS_TIMEOUT=10"
+        - "WAIT_BEFORE_HOSTS=10"
+
+  bokeh_nginx:
+    image: bokeh-nginx
+    container_name: ${NGINXHOST}
+    hostname: ${NGINXHOST}
+    networks:
+      - bokeh0
+    ports:
+      - "8080:80"
+      - "4430:443"
+    volumes:
+        - "${PWD}:/home/webmaster"
+    environment:
+        - "MYSQL_ROOT_PASSWORD=${MYSQLPWD}"
+        - "install_dir=${INSTALLDIR}"
+        - "uid=${USERID}"
+        - "url=${URL}"
+        - "db_host=${DBHOST}"
+        - "db_name=${DBNAME}"
+        - "db_user=${DBUSER}"
+        - "db_pwd=${DBPWD}"
+        - "php_host=${PHPHOST}"
+        - "WAIT_HOSTS=${MYSQLHOST}:3306, ${PHPHOST}:9000"
+        - "WAIT_HOSTS_TIMEOUT=120" 
+        - "WAIT_BEFORE_HOSTS=45"
+

@@ -67,26 +67,47 @@ _get_config() {
 # AFI ADD-ON --- 20190730 : ldeuffic@afi-sa.fr
 # change value to /etc/mysql/my.cnf
 _set_config() {
-	file_env 'install_dir'
-	file_env 'db_name'
-	file_env 'uid'
-
+	./wait
 	sudo usermod -u $uid mysql && sudo groupmod -g $uid mysql
-	sudo chown mysql:mysql /tmp/*.cnf && sudo chown mysql:mysql /var/lib/mysql && sudo chown mysql /var/run/mysqld && sudo chown mysql /var/log/mysql
+	sudo chown mysql:mysql /tmp/*.cnf /var/lib/mysql && sudo chown mysql /var/run/mysqld /var/log/mysql
 
 	if ! [ -z "$install_dir" ]; then
 		sed -i "s:INSTALLDIR:$install_dir:g" /tmp/*.cnf
 	else
-		echo >&2 'info: no specific config available '
+		echo >&2 '[BOKEH-MYSQL] Mysql DataDir not specified.'
+		exit 1
 	fi
 	
 	if [ -a /tmp/my.cnf ]; then
 		cp -p /tmp/my.cnf /etc/mysql/my.cnf
 	fi
 	
-	if [ -a /tmp/my.sh ]; then
-		bash /tmp/my.sh $install_dir $db_name
-	fi
+        if [ ! -d /home/webmaster/${install_dir} ]
+        then
+                echo "[BOKEH-MYSQL] Prepare bokeh environment..."
+                mkdir -p /home/webmaster/${install_dir}/php/bokeh
+                mkdir -p /home/webmaster/${install_dir}/conf/php
+                mkdir -p /home/webmaster/${install_dir}/conf/mysql
+                mkdir -p /home/webmaster/${install_dir}/conf/nginx
+                mkdir -p /home/webmaster/${install_dir}/log/php
+                mkdir -p /home/webmaster/${install_dir}/log/nginx
+                mkdir -p /home/webmaster/${install_dir}/log/mysql
+                mkdir -p /home/webmaster/${install_dir}/htdocs
+                mkdir -p /home/webmaster/${install_dir}/ftp
+                mkdir -p /home/webmaster/${install_dir}/mysql
+                mkdir -p /home/webmaster/${install_dir}/scripts
+                mkdir -p /home/webmaster/${install_dir}/temp
+                chmod 777 /home/webmaster/${install_dir}/temp
+        fi
+
+        if [ -z "$(ls -A /home/webmaster/${install_dir}/conf/mysql)" ]
+        then
+                echo "[BOKEH-MYSQL] Install MySQL conf files..."
+                cp -p /tmp/bokeh.cnf /home/webmaster/${install_dir}/conf/mysql/
+                sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/mysql/bokeh.cnf
+        fi
+
+	sudo chown -R mysql:mysql /home/webmaster/${install_dir}
 }
 
 # allow the container to be started with `--user`
@@ -101,7 +122,7 @@ fi
 
 if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 	# still need to check config, container may have started with --user
-	_set_config
+	#_set_config
 	_check_config "$@"
 	# Get config
 	DATADIR="$(_get_config 'datadir' "$@")"

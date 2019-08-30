@@ -15,8 +15,6 @@ function main {
                 mkdir -p /home/webmaster/${install_dir}/scripts
                 mkdir -p /home/webmaster/${install_dir}/temp
                 chmod 777 /home/webmaster/${install_dir}/temp
-                cp /tmp/install-util.sh /home/webmaster/${install_dir}/php/
-                chown webmaster:webmaster /home/webmaster/${install_dir}/php/*.sh
         fi
 
 	if [ ! -d /home/webmaster/${install_dir}/ftp/${url} ]
@@ -57,10 +55,16 @@ function main {
 
 		echo "[BOKEH-NGINX] Create MySQL setup scripts..."
 		mkdir -p /home/webmaster/${install_dir}/temp/${db_name}
-		echo "create database "${db_name}" CHARACTER SET utf8 COLLATE utf8_general_ci;" > /home/webmaster/${install_dir}/temp/${db_name}/1_create.sql
-		echo "grant all on ${db_user}.* to '${db_user}'@'172.17.0.0/255.255.0.0' identified by '${db_pwd}';" >> /home/webmaster/${install_dir}/temp/${db_name}/1_create.sql
+		echo "drop database if exists "${db_name}";" > /home/webmaster/${install_dir}/temp/${db_name}/1_create.sql
+		echo "create database "${db_name}" CHARACTER SET utf8 COLLATE utf8_general_ci;" >> /home/webmaster/${install_dir}/temp/${db_name}/1_create.sql
+		echo "grant all on ${db_user}.* to '${db_user}'@'${php_host}' identified by '${db_pwd}';" >> /home/webmaster/${install_dir}/temp/${db_name}/1_create.sql
 		echo "flush privileges;" >> /home/webmaster/${install_dir}/temp/${db_name}/1_create.sql
+
 		echo "use "${db_name}";" > /home/webmaster/${install_dir}/temp/${db_name}/2_insert.sql
+		cat /tmp/bokeh.sql >> /home/webmaster/${install_dir}/temp/${db_name}/2_insert.sql
+		sed -i "s:USERNAME:${db_user}:g" /tmp/definer.sql
+		sed -i "s:HOST:${php_host}:g" /tmp/definer.sql
+		cat /tmp/definer.sql >> /home/webmaster/${install_dir}/temp/${db_name}/2_insert.sql
 
 		echo "use "${db_name}";" > /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
 		echo "UPDATE bib_admin_profil SET TITRE_SITE='"${url}"' WHERE bib_admin_profil.ID_PROFIL=1 ;" >> /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
@@ -82,6 +86,18 @@ function main {
 		echo "UPDATE bib_admin_var SET valeur='"${url}"' WHERE bib_admin_var.clef = 'NOM_DOMAINE' ;" >> /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
 		echo "UPDATE bib_admin_var SET valeur='' where clef='BUID' ;" >> /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
 
+		mysql -h ${db_host} -u root -p${mysql_root_passwd} -A mysql < /home/webmaster/${install_dir}/temp/${db_name}/1_create.sql
+		mysql -h ${db_host} -u root -p${mysql_root_passwd} -A mysql < /home/webmaster/${install_dir}/temp/${db_name}/2_insert.sql
+		mysql -h ${db_host} -u root -p${mysql_root_passwd} -A mysql < /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
+
+		echo "[BOKEH-NGINX] Set Bokeh DB access rights..."
+		echo "grant all on "${db_user}".* to '"${db_user}"'@'"${php_host}"' identified by '"${db_pwd}"';" > /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
+		echo "grant all on "${db_user}".* to '"${db_user}"'@'"${php_ip}"' identified by '"${db_pwd}"';" >> /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
+		#echo "grant all on "${db_user}".* to '"${db_user}"'@'"${net_gw}"' identified by '"${db_pwd}"';" >> /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
+		echo "flush privileges;" >> /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
+
+		 mysql -h ${db_host} -u root -p${mysql_root_passwd} -A mysql < /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
+
 		successMessage
 		printErrors
 	fi
@@ -89,9 +105,13 @@ function main {
 
 install_dir=$1
 url=$2
-db_host=$3
-db_name=$4
-db_user=$5
-db_pwd=$6
+mysql_root_passwd=$3
+db_host=$4
+db_name=$5
+db_user=$6
+db_pwd=$7
+php_host=$8
+php_ip=$9
+#net_gw=$10
 
 main

@@ -43,7 +43,7 @@ location ~ /cosmogramme/cosmozend {
         fastcgi_busy_buffers_size 256k;
         fastcgi_temp_file_write_size 256k;
         fastcgi_intercept_errors on;
-	fastcgi_pass 172.17.0.1:9000;
+	fastcgi_pass PHPHOST:9000;
 }
 
 location ~ (\.php$|/(cosmogramme|exploit/(test\.php|fpm-ping|fpm-status))) {
@@ -57,5 +57,5 @@ location ~ (\.php$|/(cosmogramme|exploit/(test\.php|fpm-ping|fpm-status))) {
         fastcgi_busy_buffers_size 256k;
         fastcgi_temp_file_write_size 256k;
         fastcgi_intercept_errors on;
-	fastcgi_pass 172.17.0.1:9000;
+	fastcgi_pass PHPHOST:9000;
 }
