@@ -45,7 +45,7 @@ function main {
 		updateConfig ${db_user} ${db_pwd} ${db_name} /home/webmaster/${install_dir}/htdocs/${url} ${db_host}
 
 		echo "[BOKEH-NGINX] Clone initial skin..."
-		mkdir -p /home/webmaster/${install_dir}/${url}/skins/etalon
+		mkdir -p /home/webmaster/${install_dir}/htdocs/${url}/skins/etalon
 		git clone https://git.afi-sa.net/opac-skins/etalon.git /home/webmaster/${install_dir}/htdocs/${url}/skins/etalon
 
 		echo "[BOKEH-NGINX] Set permissions..."
