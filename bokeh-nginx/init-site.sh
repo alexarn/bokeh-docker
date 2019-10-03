@@ -93,7 +93,6 @@ function main {
 		echo "[BOKEH-NGINX] Set Bokeh DB access rights..."
 		echo "grant all on "${db_user}".* to '"${db_user}"'@'"${php_host}"' identified by '"${db_pwd}"';" > /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
 		echo "grant all on "${db_user}".* to '"${db_user}"'@'"${php_ip}"' identified by '"${db_pwd}"';" >> /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
-		#echo "grant all on "${db_user}".* to '"${db_user}"'@'"${net_gw}"' identified by '"${db_pwd}"';" >> /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
 		echo "flush privileges;" >> /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
 
 		 mysql -h ${db_host} -u root -p${mysql_root_passwd} -A mysql < /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
@@ -112,6 +111,5 @@ db_user=$6
 db_pwd=$7
 php_host=$8
 php_ip=$9
-#net_gw=$10
 
 main
