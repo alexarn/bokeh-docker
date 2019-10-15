@@ -98,7 +98,7 @@ docker run -d --network=bokeh0 -p 3306:3306 --name bokeh-mysql -h bokeh-mysql -e
 This will clone the Bokeh project in *www* subdirectory ( *install_dir* param ). In order to set files ownership to the you account, use the *uid* param as follow. 
 ```
 cd your/work/space/
-docker run -d -p 9000:9000 --name my-bokeh-dev -h bokeh-php-7.1-dev -e install_dir=www -e uid=$(id -u) -v $(pwd)/:/home/webmaster/ bokeh-php-7.1-dev
+docker run -d -p 9000:9000 --network=bokeh0 --name my-bokeh-dev -h bokeh-php-7.1-dev -e install_dir=www -e uid=$(id -u) -v $(pwd)/:/home/webmaster/ bokeh-php-7.1-dev
 ```
 
 ## NGINX
