@@ -12,6 +12,7 @@ function main {
 		cp -p /tmp/bokeh-pool.conf /home/webmaster/${install_dir}/conf/php/
 		sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/php/bokeh-php-fpm.conf
 		sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/php/bokeh-pool.conf
+		cat /tmp/docker-php-ext-xdebug.ini >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 	fi
 
 	if [ "${memcache_host}" == "none" ]

@@ -16,6 +16,7 @@ COPY install-util.sh /tmp/install-util.sh
 COPY init-php.sh /tmp/init-php.sh
 COPY start-php.sh /start-php.sh
 COPY wait /wait
+COPY docker-php-ext-xdebug.ini /tmp/docker-php-ext-xdebug.ini
 RUN chmod +x /wait
 
 EXPOSE 9000
