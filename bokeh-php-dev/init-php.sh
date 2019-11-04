@@ -57,17 +57,20 @@ function ensure_confs {
         sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/php/bokeh-pool.conf
     fi
 
-    if [ ! -a /home/webmaster/${install_dir}/php/bokeh/local.php ]
+    if [ ! -f /home/webmaster/${install_dir}/php/bokeh/local.php ]
     then
+	echo "[BOKEH-PHP] Copy local.php conf file..."
 	cp /tmp/local.php /home/webmaster/${install_dir}/php/bokeh/
 	chown webmaster:webmaster /home/webmaster/${install_dir}/php/bokeh/local.php
     fi
     
     if [ "${memcache_host}" == "none" ]
     then
+	echo "[BOKEH-PHP] Disable PHP memcached server configuration..."
         cp /tmp/session_save_path.dir /home/webmaster/${install_dir}/conf/php/session_save_path.conf
         sed -i "s:^define('MEMCACHED://define('MEMCACHED:g" /home/webmaster/${install_dir}/php/bokeh/local.php
     else
+	echo "[BOKEH-PHP] Enable PHP memcached server configuration..."
         cp /tmp/session_save_path.memcache /home/webmaster/${install_dir}/conf/php/session_save_path.conf
         sed -i "s:MEMCACHEHOST:${memcache_host}:g" /home/webmaster/${install_dir}/conf/php/session_save_path.conf
         sed -i "s:MEMCACHEHOST:${memcache_host}:g" /home/webmaster/${install_dir}/php/bokeh/local.php
@@ -76,6 +79,7 @@ function ensure_confs {
 
 
 install_dir=$1
+memcache_host=$2
 
 ensure_directories
 ensure_install_utils
