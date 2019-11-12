@@ -11,12 +11,12 @@ COPY bokeh-php-fpm.conf /tmp/bokeh-php-fpm.conf
 COPY bokeh-pool.conf /tmp/bokeh-pool.conf
 COPY session_save_path.memcache /tmp/session_save_path.memcache
 COPY session_save_path.dir /tmp/session_save_path.dir
+COPY docker-php-ext-xdebug.ini /tmp/docker-php-ext-xdebug.ini
 COPY local.php /tmp/local.php
 COPY install-util.sh /tmp/install-util.sh
 COPY init-php.sh /tmp/init-php.sh
 COPY start-php.sh /start-php.sh
 COPY wait /wait
-COPY docker-php-ext-xdebug.ini /tmp/docker-php-ext-xdebug.ini
 RUN chmod +x /wait
 
 EXPOSE 9000
