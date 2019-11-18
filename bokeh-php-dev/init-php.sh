@@ -40,8 +40,6 @@ function ensure_bokeh_sources {
     fi
 
     cd /home/webmaster/${install_dir}/php/bokeh
-    nextStep "git fetch -t --all"
-    executeCommand "git fetch -t --all"
     nextStep "./update.sh"
     executeCommand "./update.sh"
 }
