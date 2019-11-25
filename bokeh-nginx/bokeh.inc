@@ -59,3 +59,13 @@ location ~ (\.php$|/(cosmogramme|exploit/(test\.php|fpm-ping|fpm-status))) {
         fastcgi_intercept_errors on;
 	fastcgi_pass PHPHOST:9000;
 }
+
+location ^~ /xhprof_html/ {
+	root /home/webmaster/INSTALLDIR/php/bokeh/xhprof;
+	include fastcgi_params;
+	fastcgi_index  index.php;
+	fastcgi_param SCRIPT_FILENAME	$document_root$fastcgi_script_name;
+	fastcgi_pass PHPHOST:9000;
+
+	location ~ ^.*\.(css|js|gif)$ {}
+}

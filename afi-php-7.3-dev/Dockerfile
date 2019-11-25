@@ -59,7 +59,8 @@ RUN docker-php-ext-configure zip --with-libzip \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
 
-RUN apt-get -y autoclean && apt-get -y clean
+RUN apt-get install -y --no-install-recommends graphviz \
+    && apt-get -y autoclean && apt-get -y clean
 
 RUN addgroup --system --gid 500 webmaster \
     && adduser --system --home /home/webmaster --shell /bin/bash --disabled-password --gid 500 --uid 500 webmaster \
