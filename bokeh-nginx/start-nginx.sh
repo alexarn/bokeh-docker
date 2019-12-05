@@ -6,8 +6,7 @@ function main {
 	php_ip=$(dig +short ${php_host})
         su -l webmaster -c "bash /tmp/init-site.sh ${install_dir} ${url} ${MYSQL_ROOT_PASSWORD} ${db_host} ${db_name} ${db_user} ${db_pwd} ${php_host} ${php_ip}"
 
-        #if [ -z "$(ls -A /home/webmaster/${install_dir}/conf/nginx/${url}.conf)" ]
-        if [ ! -a /home/webmaster/${install_dir}/conf/nginx/${url}.conf ]
+        if [ ! -f /home/webmaster/${install_dir}/conf/nginx/${url}.conf ]
         then
                 echo "[BOKEH-NGINX] Install NGINX conf files..."
                 cp -p /tmp/bokeh.inc /home/webmaster/${install_dir}/conf/nginx/${url}.inc

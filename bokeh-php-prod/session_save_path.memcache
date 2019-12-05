@@ -1,4 +1,4 @@
 php_admin_value[session.save_handler]=memcached
 php_admin_value[session.save_path]='MEMCACHEHOST:11211'
-php_admin_value[session.hash_function]=1
-php_admin_value[session.entropy_length]=16
+;php_admin_value[session.hash_function]=1
+;php_admin_value[session.entropy_length]=16
