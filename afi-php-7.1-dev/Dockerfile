@@ -69,6 +69,11 @@ RUN mkdir /usr/local/lib/php/sessions \
     && chmod g+wx /usr/local/lib/php/sessions && chmod o+wt /usr/local/lib/php/sessions \
     && chown webmaster:www-data /usr/local/lib/php/sessions
 
+
+RUN cd /usr/local/bin \
+    && wget -O phpunit https://phar.phpunit.de/phpunit-5.7.9.phar \
+    && chmod +x phpunit
+
 EXPOSE 9000
 
 CMD ["php-fpm", "-F"]
