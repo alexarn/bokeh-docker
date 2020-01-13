@@ -34,6 +34,7 @@ RUN apt-get update -yqq \
                default-mysql-client \
 	       zip \
 	       libzip-dev \
+	       libxslt-dev \
                git -yqq
 
 RUN pecl install imagick-3.4.3RC1 \
@@ -54,7 +55,7 @@ RUN docker-php-ext-enable imagick \
     && docker-php-ext-enable xhprof
 
 RUN docker-php-ext-configure zip --with-libzip \
-    && docker-php-ext-install mysqli gettext calendar zip soap \
+    && docker-php-ext-install mysqli gettext calendar zip soap xsl \
     && docker-php-ext-install -j$(nproc) iconv \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
