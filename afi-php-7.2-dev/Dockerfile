@@ -72,6 +72,11 @@ RUN mkdir /usr/local/lib/php/sessions \
     && chmod g+wx /usr/local/lib/php/sessions && chmod o+wt /usr/local/lib/php/sessions \
     && chown webmaster:www-data /usr/local/lib/php/sessions
 
+RUN cd /usr/local/share \
+    && wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 \
+    && tar -xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 \
+    && ln -s /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin
+
 EXPOSE 9000
 
 CMD ["php-fpm", "-F"]
