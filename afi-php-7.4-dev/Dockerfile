@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-stretch
+FROM php:7.4-fpm-buster
 MAINTAINER AFI SA - Luc Deuffic <ldeuffic@afi-sa.fr>
 
 ENV TERM=xterm
@@ -39,8 +39,9 @@ RUN apt-get update -yqq \
 
 RUN pecl install imagick-3.4.3RC1 \
     && pecl install memcached \
-    && pecl install xdebug-2.6.0 \
-    && pecl install mcrypt-1.0.2
+    && pecl install xdebug-beta
+
+RUN pecl install mcrypt-1.0.3
 
 RUN cd /root && git clone "https://github.com/longxinH/xhprof" && cd xhprof/extension/ \
     && phpize \
@@ -54,9 +55,11 @@ RUN docker-php-ext-enable imagick \
     && docker-php-ext-enable mcrypt \
     && docker-php-ext-enable xhprof
 
-RUN docker-php-ext-install mysqli gettext calendar zip soap xsl \
-    && docker-php-ext-install -j$(nproc) iconv \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+RUN docker-php-ext-configure zip \
+    && docker-php-ext-install mysqli gettext calendar zip soap xsl \
+    && docker-php-ext-install -j$(nproc) iconv
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 
 RUN apt-get install -y --no-install-recommends graphviz \
