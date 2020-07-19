@@ -1,4 +1,4 @@
-FROM afi-php-7.1-dev:latest
+FROM afi-php-7.4-dev:latest
 MAINTAINER AFI SA - Luc Deuffic <ldeuffic@afi-sa.fr>
 
 ENV uid=500
