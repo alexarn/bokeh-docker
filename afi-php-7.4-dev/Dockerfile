@@ -78,7 +78,7 @@ RUN mkdir /usr/local/lib/php/sessions \
     && chown webmaster:www-data /usr/local/lib/php/sessions
 
 RUN cd /usr/local/bin \
-    && wget -O phpunit https://phar.phpunit.de/phpunit-5.7.9.phar \
+    && wget -O phpunit https://phar.phpunit.de/phpunit-5.7.27.phar \
     && chmod +x phpunit
 
 RUN cd /usr/local/share \
