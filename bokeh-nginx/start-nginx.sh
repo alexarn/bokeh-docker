@@ -2,7 +2,7 @@
 
 function main {
 	usermod -u ${uid} webmaster && groupmod -g ${uid} webmaster
-	chown webmaster:webmaster /tmp/*.sql
+	chown webmaster:webmaster /tmp/*.sql /tmp/*.conf /tmp/*.inc
 	php_ip=$(dig +short ${php_host})
         su -l webmaster -c "bash /tmp/init-site.sh ${install_dir} ${url} ${MYSQL_ROOT_PASSWORD} ${db_host} ${db_name} ${db_user} ${db_pwd} ${php_host} ${php_ip}"
 
