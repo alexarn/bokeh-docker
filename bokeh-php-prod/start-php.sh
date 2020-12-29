@@ -6,6 +6,7 @@ function main {
     
     usermod -u ${uid} webmaster && groupmod -g ${uid} webmaster
     chown webmaster:www-data /usr/local/lib/php/sessions
+    chown webmaster:webmaster /tmp/*.conf
     su -l webmaster -c "bash /tmp/init-php.sh ${install_dir} ${memcache_host}"
 
     echo "[BOKEH-PHP] Start php-fpm..."

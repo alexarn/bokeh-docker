@@ -70,8 +70,10 @@ function ensure_confs {
     else
 	echo "[BOKEH-PHP] Enable PHP memcached server configuration..."
         cp /tmp/session_save_path.memcache /home/webmaster/${install_dir}/conf/php/session_save_path.conf
+        cp /tmp/memcached_tuning.conf /home/webmaster/${install_dir}/conf/php/memcached_tuning.conf
         sed -i "s:MEMCACHEHOST:${memcache_host}:g" /home/webmaster/${install_dir}/conf/php/session_save_path.conf
         sed -i "s:MEMCACHEHOST:${memcache_host}:g" /home/webmaster/${install_dir}/php/bokeh/local.php
+	printf "\ninclude = /home/webmaster/www/conf/php/memcached_tuning.conf\n" >> /home/webmaster/${install_dir}/conf/php/bokeh-pool.conf
     fi
 }
 
