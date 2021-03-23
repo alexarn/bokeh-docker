@@ -1,12 +1,12 @@
 # Include directives for Bokeh portal
 
-location ~ /\.(css|js)($|\?.*$) {
+location ~ ^.*\.(css|js)($|\?.*$) {
         add_header Cache-Control "max-age=604800, public";
         tcp_nodelay   off;
         try_files  $uri =404;
 }
 
-location ~ /\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$ {
+location ~ ^.*\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$ {
         add_header Cache-Control "max-age=604800, public";
         tcp_nodelay   off;
         try_files  $uri =404;

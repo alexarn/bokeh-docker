@@ -1,7 +1,10 @@
 #!/bin/bash
 
 function main {
-    cat /tmp/docker-php-ext-xdebug.ini >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    if ! grep -q "[DONE]" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    then
+	cat /tmp/docker-php-ext-xdebug.ini >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    fi
     sed -i "s:INSTALLDIR:${install_dir}:g" /usr/local/etc/php/php.ini
     sed -i "s:INSTALLDIR:${install_dir}:g" /usr/local/etc/php-fpm.conf
     
