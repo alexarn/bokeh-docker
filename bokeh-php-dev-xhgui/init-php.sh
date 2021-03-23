@@ -15,6 +15,7 @@ function ensure_directories {
 	mkdir -p /home/webmaster/${install_dir}/ftp
 	mkdir -p /home/webmaster/${install_dir}/mysql
 	mkdir -p /home/webmaster/${install_dir}/scripts
+	mkdir -p /home/webmaster/${install_dir}/xhgui
 	mkdir -p /home/webmaster/${install_dir}/temp
 	chmod 777 /home/webmaster/${install_dir}/temp
     fi
@@ -44,33 +45,33 @@ function ensure_bokeh_sources {
     executeCommand "./update.sh"
 }
 
+function ensure_install_xhgui {
+	if [ -z "$(ls -A /home/webmaster/${install_dir}/xhgui)" ]
+    then
+	echo "[BOKEH-PHP] Install xhprof gui..."
+	cd /home/webmaster/${install_dir}/xhgui
+	git clone https://github.com/perftools/xhgui.git .
+	chmod -R 0777 ./cache
+	php install.php
+	composer require perftools/php-profiler perftools/xhgui-collector alcaeus/mongo-php-adapter webino/zend-db-profiler
+    fi
+}
 
 function ensure_confs {
-    #if [ -z "$(ls -A /home/webmaster/${install_dir}/conf/php)" ]
-    #then
-    #    echo "[BOKEH-PHP] Install PHP conf files..."
-    #    cp -p /tmp/bokeh-php-fpm.conf /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-php-fpm.conf
-    #    cp -p /tmp/bokeh-pool.conf /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-pool.conf
-    #    sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-php-fpm.conf
-    #    sed -i "s:PHPHOST:${php_host}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-php-fpm.conf
-    #    sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-pool.conf
-    #    sed -i "s:PHPHOST:${php_host}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-pool.conf
-    #fi
-
     if [ ! -f /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-php-fpm.conf ]
     then
-	echo "[BOKEH-PHP] Install PHP conf file ${php_host}-bokeh-php-fpm.conf..."
-	cp -p /tmp/bokeh-php-fpm.conf /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-php-fpm.conf
-	sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-php-fpm.conf
-	sed -i "s:PHPHOST:${php_host}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-php-fpm.conf
+        echo "[BOKEH-PHP] Install PHP conf file ${php_host}-bokeh-php-fpm.conf..."
+        cp -p /tmp/bokeh-php-fpm.conf /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-php-fpm.conf
+        sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-php-fpm.conf
+        sed -i "s:PHPHOST:${php_host}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-php-fpm.conf
     fi
 
     if [ ! -f /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-pool.conf ]
     then
-	echo "[BOKEH-PHP] Install PHP conf file ${php_host}-bokeh-pool.conf..."
-	cp -p /tmp/bokeh-pool.conf /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-pool.conf
-	sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-pool.conf
-	sed -i "s:PHPHOST:${php_host}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-pool.conf
+        echo "[BOKEH-PHP] Install PHP conf file ${php_host}-bokeh-pool.conf..."
+        cp -p /tmp/bokeh-pool.conf /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-pool.conf
+        sed -i "s:INSTALLDIR:${install_dir}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-pool.conf
+        sed -i "s:PHPHOST:${php_host}:g" /home/webmaster/${install_dir}/conf/php/${php_host}-bokeh-pool.conf
     fi
 
     if [ ! -f /home/webmaster/${install_dir}/php/bokeh/local.php ]
@@ -79,7 +80,13 @@ function ensure_confs {
 	cp /tmp/local.php /home/webmaster/${install_dir}/php/bokeh/
 	chown webmaster:webmaster /home/webmaster/${install_dir}/php/bokeh/local.php
     fi
-    
+
+    if [ ! -f /home/webmaster/${install_dir}/xhgui/config/config.php ]
+    then
+	cp /tmp/xhgui_config.php /home/webmaster/${install_dir}/xhgui/config/config.php
+	sed -i "s:MONGOHOST:${mongo_host}:g" /home/webmaster/${install_dir}/xhgui/config/config.php
+    fi
+
     if [ "${memcache_host}" == "none" ]
     then
 	echo "[BOKEH-PHP] Disable PHP memcached server configuration..."
@@ -99,9 +106,11 @@ function ensure_confs {
 install_dir=$1
 memcache_host=$2
 php_host=$3
+mongo_host=$4
 
 ensure_directories
 ensure_install_utils
 ensure_bokeh_sources
+ensure_install_xhgui
 ensure_confs    
 
