@@ -57,6 +57,7 @@ RUN cd /root && git clone "https://github.com/longxinH/xhprof" && cd xhprof/exte
 RUN docker-php-ext-enable memcached \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-enable mcrypt \
+    && docker-php-ext-enable opcache \
     && docker-php-ext-enable xhprof
 
 RUN docker-php-ext-install pcntl
