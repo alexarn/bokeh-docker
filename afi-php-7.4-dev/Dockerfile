@@ -53,7 +53,9 @@ RUN docker-php-ext-enable imagick \
     && docker-php-ext-enable memcached \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-enable mcrypt \
+    && docker-php-ext-enable opcache \
     && docker-php-ext-enable xhprof
+
 
 RUN docker-php-ext-install pcntl
 

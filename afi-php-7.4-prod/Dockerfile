@@ -43,6 +43,7 @@ RUN pecl install imagick-3.4.3RC1 \
 
 RUN docker-php-ext-enable imagick \
     && docker-php-ext-enable memcached \
+    && docker-php-ext-enable opcache \
     && docker-php-ext-enable mcrypt
 
 RUN docker-php-ext-install pcntl
