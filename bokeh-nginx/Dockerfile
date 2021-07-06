@@ -19,9 +19,13 @@ COPY site.conf /tmp/site.conf
 COPY bokeh-userfiles.tgz /tmp/bokeh-userfiles.tgz
 COPY init-site.sh /tmp/init-site.sh
 COPY start-nginx.sh /start-nginx.sh
-COPY wait /wait
-RUN chmod +x /wait
+COPY nginxReloader.sh /nginxReloader.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /nginxReloader.sh
+RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x /start-nginx.sh
 
 EXPOSE 80 443
 
-CMD /wait && bash /start-nginx.sh
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
+CMD ["/start-nginx.sh"]

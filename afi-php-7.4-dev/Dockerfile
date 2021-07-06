@@ -8,7 +8,7 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 RUN sed -i 's/main/main contrib non-free/g' /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y --no-install-recommends apt-utils apt-transport-https
-RUN apt-get install -y --no-install-recommends curl wget iputils-ping dnsutils lsb-release vim sudo rsync tzdata locales openssl libapr1-dev libssl-dev
+RUN apt-get install -y --no-install-recommends curl wget iputils-ping dnsutils lsb-release vim sudo rsync tzdata locales openssl libapr1-dev libssl-dev procps
 
 RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
     && dpkg-reconfigure --frontend noninteractive tzdata
@@ -55,7 +55,6 @@ RUN docker-php-ext-enable imagick \
     && docker-php-ext-enable mcrypt \
     && docker-php-ext-enable opcache \
     && docker-php-ext-enable xhprof
-
 
 RUN docker-php-ext-install pcntl
 

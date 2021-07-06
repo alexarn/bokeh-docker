@@ -19,3 +19,4 @@ define('MAX_SEARCH_RESULTS', '200000');
 define('STATUS_REPORT_TAGS', 'stable;AFI');
 ini_set('xdebug.remote_port', 'XDEBUGPORT');
 ini_set('xdebug.remote_host', 'DOCKERHOST');
+?>

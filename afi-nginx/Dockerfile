@@ -8,7 +8,7 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 RUN sed -i 's/main/main contrib non-free/g' /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y --no-install-recommends apt-utils apt-transport-https
-RUN apt-get install -y --no-install-recommends curl wget iputils-ping dnsutils net-tools lsb-release vim sudo git ca-certificates mariadb-client rsync tzdata locales openssl libapr1-dev libssl-dev
+RUN apt-get install -y --no-install-recommends curl wget iputils-ping dnsutils net-tools lsb-release vim sudo git ca-certificates mariadb-client rsync tzdata locales openssl libapr1-dev libssl-dev inotify-tools
 
 RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
     && dpkg-reconfigure --frontend noninteractive tzdata
@@ -16,6 +16,9 @@ RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
 RUN sed -i '/fr_FR\.UTF/s/^# //g' /etc/locale.gen \
     && sed -i '/en_US\.UTF/s/^# //g' /etc/locale.gen \
     && locale-gen
+
+COPY vivid_0.4.0_amd64.deb /root/vivid_0.4.0_amd64.deb
+RUN dpkg -i /root/vivid_0.4.0_amd64.deb
 
 RUN addgroup --system --gid 500 webmaster \
     && adduser --system --home /home/webmaster --shell /bin/bash --disabled-password --gid 500 --uid 500 webmaster \
