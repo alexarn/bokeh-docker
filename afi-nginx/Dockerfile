@@ -17,9 +17,6 @@ RUN sed -i '/fr_FR\.UTF/s/^# //g' /etc/locale.gen \
     && sed -i '/en_US\.UTF/s/^# //g' /etc/locale.gen \
     && locale-gen
 
-COPY vivid_0.4.0_amd64.deb /root/vivid_0.4.0_amd64.deb
-RUN dpkg -i /root/vivid_0.4.0_amd64.deb
-
 RUN addgroup --system --gid 500 webmaster \
     && adduser --system --home /home/webmaster --shell /bin/bash --disabled-password --gid 500 --uid 500 webmaster \
     && usermod -G webmaster www-data \
