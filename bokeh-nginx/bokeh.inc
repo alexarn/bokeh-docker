@@ -6,7 +6,6 @@ location ~ ^.*\.(css|js)($|\?.*$) {
         try_files  $uri =404;
 }
 
-
 location ~ ^\/(userfiles|public|tmp|temp|skins|library\/templates|library\/digital_resources)\/.*\.(ico|txt|gif|jpg|jpeg|png|xml|swf|mov|pdf|doc|docx|woff|woff2|eot|svg|ttf|xls|xlsx|xlsm|wsdl|mp3|m4v|ogg|ogv|epub|htm|html|xhtml|asmx|zip|sql|bro|flv|mp4|webm|webp|tgz|json|geojson|xsl|ods|odp|odt|ots|ott|odm|odg|otg|otp)$ {
         add_header Cache-Control "max-age=604800, public";
         tcp_nodelay   off;
@@ -59,14 +58,6 @@ location ~ (\.php$|/(cosmogramme|exploit/(test\.php|fpm-ping|fpm-status))) {
         fastcgi_temp_file_write_size 256k;
         fastcgi_intercept_errors on;
 	fastcgi_pass PHPHOST:9000;
-}
-
-location ^~ /xhprof_html/ {
-	root /home/webmaster/INSTALLDIR/php/bokeh/xhprof;
-	include fastcgi_params;
-	fastcgi_index  index.php;
-	fastcgi_param SCRIPT_FILENAME	$document_root$fastcgi_script_name;
-	fastcgi_pass PHPHOST:9000;
-
-	location ~ ^.*\.(css|js|gif)$ {}
+	fastcgi_send_timeout 180s;
+        fastcgi_read_timeout 180s;
 }

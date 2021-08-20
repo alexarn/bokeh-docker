@@ -1,5 +1,5 @@
 function main {
-        if [ ! -d /home/webmaster/${install_dir} ]
+        if [ ! -d /home/webmaster/${install_dir} ] || [ -z "$(ls -A /home/webmaster/${install_dir})" ]
         then
                 echo "[BOKEH-NGINX] Prepare bokeh environment..."
                 mkdir -p /home/webmaster/${install_dir}/php/bokeh
@@ -57,8 +57,6 @@ function main {
 		mkdir -p /home/webmaster/${install_dir}/temp/${db_name}
 		echo "drop database if exists "${db_name}";" > /home/webmaster/${install_dir}/temp/${db_name}/1_create.sql
 		echo "create database "${db_name}" CHARACTER SET utf8 COLLATE utf8_general_ci;" >> /home/webmaster/${install_dir}/temp/${db_name}/1_create.sql
-		echo "grant all on ${db_user}.* to '${db_user}'@'${php_host}' identified by '${db_pwd}';" >> /home/webmaster/${install_dir}/temp/${db_name}/1_create.sql
-		echo "flush privileges;" >> /home/webmaster/${install_dir}/temp/${db_name}/1_create.sql
 
 		echo "use "${db_name}";" > /home/webmaster/${install_dir}/temp/${db_name}/2_insert.sql
 		cat /tmp/bokeh.sql >> /home/webmaster/${install_dir}/temp/${db_name}/2_insert.sql
@@ -91,6 +89,7 @@ function main {
 		mysql -h ${db_host} -u root -p${mysql_root_passwd} -A mysql < /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
 
 		echo "[BOKEH-NGINX] Set Bokeh DB access rights..."
+		echo ${php_host}"/"${php_net}
 		echo "grant all on "${db_user}".* to '"${db_user}"'@'"${php_host}"' identified by '"${db_pwd}"';" > /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
 		echo "grant all on "${db_user}".* to '"${db_user}"'@'"${php_net}"' identified by '"${db_pwd}"';" >> /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql
 		echo "flush privileges;" >> /home/webmaster/${install_dir}/temp/${db_name}/4_grant.sql

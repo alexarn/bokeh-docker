@@ -9,6 +9,8 @@ COPY php.ini /usr/local/etc/php/php.ini
 COPY php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY bokeh-php-fpm.conf /tmp/bokeh-php-fpm.conf
 COPY bokeh-pool.conf /tmp/bokeh-pool.conf
+COPY memcached_tuning.conf /tmp/memcached_tuning.conf
+COPY opcache_tuning.conf /tmp/opcache_tuning.conf
 COPY session_save_path.memcache /tmp/session_save_path.memcache
 COPY session_save_path.dir /tmp/session_save_path.dir
 COPY docker-php-ext-xdebug.ini /tmp/docker-php-ext-xdebug.ini
