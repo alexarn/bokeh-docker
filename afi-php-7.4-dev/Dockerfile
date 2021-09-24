@@ -39,7 +39,7 @@ RUN apt-get update -yqq \
 
 RUN pecl install imagick-3.4.3RC1 \
     && pecl install memcached \
-    && pecl install xdebug-beta
+    && pecl install xdebug-2.9.8
 
 RUN pecl install mcrypt-1.0.3
 
@@ -83,10 +83,21 @@ RUN cd /usr/local/bin \
     && chmod +x phpunit
 
 RUN cd /usr/local/share \
-    && wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 \
-    && tar -xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 \
-    && ln -s /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin
-
+    && wget -O chrome-linux.zip https://download-chromium.appspot.com/dl/Linux_x64?type=snapshots \
+    && unzip chrome-linux.zip \
+    && ln -s /usr/local/share/chrome-linux/chrome /usr/local/bin/chromium \
+    && apt-get install -yqq  libnss3 \
+			     libatk1.0-0 \
+			     libatk-bridge2.0-0 \
+			     libdrm2 \
+			     libxkbcommon0 \
+			     libxcomposite1 \
+			     libxdamage1 \
+			     libxrandr2 \
+			     libgbm1 \
+			     libasound2 \
+			     libxshmfence1
+    
 EXPOSE 9000
 
 CMD ["php-fpm", "-F"]
