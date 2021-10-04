@@ -46,7 +46,7 @@ function ensure_bokeh_sources {
 }
 
 function ensure_install_xhgui {
-	if [ -z "$(ls -A /home/webmaster/${install_dir}/xhgui)" ]
+    if [ -z "$(ls -A /home/webmaster/${install_dir}/xhgui)" ]
     then
 	echo "[BOKEH-PHP] Install xhprof gui..."
 	cd /home/webmaster/${install_dir}/xhgui
