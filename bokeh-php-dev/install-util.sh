@@ -162,9 +162,6 @@ function updateConfig() {
     sed -i "s/sgbd.config.host =.*/sgbd.config.host = "$HOST"/g" $CONFIGPATH"/config.ini"
     sed -i "s/sgbd.user =.*/sgbd.config.user = admpergame/g" $CONFIGPATH"/config.ini"
     sed -i "s/sgbd.user =.*/sgbd.config.pwd = "$PASSWORD"/g" $CONFIGPATH"/config.ini"
-    sed -i "s/console.user =.*/console.user = "$USERNAME"/g" $CONFIGPATH"/config.ini"
-    sed -i "s/console.pwd =.*/console.pwd = "$PASSWORD"/g" $CONFIGPATH"/config.ini"
-
 
     sed -i "s/integration_server=.*/integration_server="$HOST"/g" $CONFIGPATH"/cosmogramme/config.php"
     sed -i "s/integration_user=.*/integration_user="$USERNAME"/g" $CONFIGPATH"/cosmogramme/config.php"

@@ -66,8 +66,6 @@ function main {
 
 		echo "use "${db_name}";" > /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
 		echo "UPDATE bib_admin_profil SET TITRE_SITE='"${url}"' WHERE bib_admin_profil.ID_PROFIL=1 ;" >> /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
-		echo "UPDATE bib_admin_users SET LOGIN='"${db_user}"' WHERE bib_admin_users.ID_USER=20101 ;" >> /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
-		echo "UPDATE bib_admin_users SET PASSWORD='"${db_pwd}"' WHERE bib_admin_users.ID_USER=20101 ;" >> /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
 		echo "UPDATE bib_c_site SET LIBELLE='"${db_user}"' WHERE bib_c_site.ID_SITE=1 ;" >> /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
 		echo "UPDATE bib_c_site SET VILLE='http://"${url}"' WHERE bib_c_site.ID_SITE=1 ;" >> /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
 		echo "UPDATE int_bib SET nom_court='"${db_user}"' WHERE int_bib.id_bib=1 ;" >> /home/webmaster/${install_dir}/temp/${db_name}/3_update.sql
