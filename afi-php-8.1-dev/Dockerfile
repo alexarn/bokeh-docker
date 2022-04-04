@@ -53,7 +53,8 @@ RUN docker-php-ext-enable memcached \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-enable mcrypt \
     && docker-php-ext-enable opcache \
-    && docker-php-ext-enable xhprof
+    && docker-php-ext-enable xhprof \
+    && docker-php-ext-enable imagick
 
 RUN docker-php-ext-install pcntl
 
@@ -77,9 +78,14 @@ RUN mkdir /usr/local/lib/php/sessions \
     && chmod g+wx /usr/local/lib/php/sessions && chmod o+wt /usr/local/lib/php/sessions \
     && chown webmaster:www-data /usr/local/lib/php/sessions
 
-RUN cd /usr/local/bin \
-    && wget -O phpunit https://phar.phpunit.de/phpunit-5.7.27.phar \
-    && chmod +x phpunit
+RUN cd /usr/local/src \
+    && git clone https://git.afi-sa.net/afi/phpunit.git \
+    && cd phpunit \
+    && git checkout bokeh-81
+
+COPY phpunit /usr/local/bin/phpunit
+
+RUN chmod +x /usr/local/bin/phpunit
 
 RUN cd /usr/local/share \
     && wget -O chrome-linux.zip https://download-chromium.appspot.com/dl/Linux_x64?type=snapshots \
