@@ -1,2 +1,2 @@
 #!/bin/sh
-php /usr/local/src/phpunit/phpunit "$@
+php /usr/local/src/phpunit/phpunit "$@"

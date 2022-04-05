@@ -78,10 +78,14 @@ RUN mkdir /usr/local/lib/php/sessions \
     && chmod g+wx /usr/local/lib/php/sessions && chmod o+wt /usr/local/lib/php/sessions \
     && chown webmaster:www-data /usr/local/lib/php/sessions
 
+RUN wget -O /usr/local/bin/composer https://getcomposer.org/download/latest-1.x/composer.phar \
+    && chmod +x /usr/local/bin/composer
+
 RUN cd /usr/local/src \
     && git clone https://git.afi-sa.net/afi/phpunit.git \
     && cd phpunit \
-    && git checkout bokeh-81
+    && git checkout bokeh-81 \
+    && composer install
 
 COPY phpunit /usr/local/bin/phpunit
 
