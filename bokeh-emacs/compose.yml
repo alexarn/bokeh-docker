@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  emacs:
+    build:
+      context: .
+      args:
+        - GROUP_ID
+        - USER_ID
+        - USERNAME
+        - BOKEH_ROOT
+    external_links:
+        - "db"
+        - "php"
+        - "cache"
+    tty: true
+    volumes:
+    - "${BOKEH_ROOT}/..:/home/${USERNAME}/bokeh"
+    - "~/.ssh:/home/${USERNAME}/.ssh"
+    user: "${USER_ID}:${GROUP_ID}"

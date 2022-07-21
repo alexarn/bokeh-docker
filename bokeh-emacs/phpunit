@@ -1,0 +1,13 @@
+#!/bin/bash
+me=$(whoami)
+pwd=$(pwd)
+dockerpath=$(echo $pwd| sed -e 's/.*bokeh/\/var\/www\/html/g')
+args=$(echo ${*}| sed -e 's/\/[0-9a-zA-Z\/]\+\/bokeh/\/var\/www\/html/g')
+container=$(docker ps|grep "$me"|grep "php"|awk '{print $1}')
+command="docker exec -w ${dockerpath} -it $container su webmaster -c \"phpunit ${args}\""
+
+echo -e "\n${command}\n"
+
+eval $command
+
+
