@@ -3,7 +3,8 @@ me=$(whoami)
 pwd=$(pwd)
 dockerpath="/var/www/html"
 container=$(docker ps|grep "$me"|grep "php"|awk '{print $1}')
-command="docker exec -w $dockerpath -it $container php ${*}"
+args=$(echo ${*}| sed -e 's/\/[0-9a-zA-Z\/]\+\/bokeh/\/var\/www\/html/g')
+command="docker exec -w $dockerpath -it $container php ${args}"
 echo -e "\n${command}\n"
 
 eval $command
