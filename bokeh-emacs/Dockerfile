@@ -7,7 +7,7 @@ ARG DOCKER_GROUP_ID
 
 RUN groupadd --system --gid ${DOCKER_GROUP_ID} docker
 
-RUN pacman -Suy --noconfirm emacs-nox git the_silver_searcher wget openssh mariadb-clients docker
+RUN pacman -Suy --noconfirm emacs-nox git the_silver_searcher wget openssh mariadb-clients global docker
 
 RUN pacman --noconfirm -Scc
 

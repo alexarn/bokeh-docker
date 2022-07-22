@@ -48,7 +48,6 @@
 
   (require 'geben)
   (require 'phpunit)
-  (require 'auto-complete)
   (require 'gtags)
 
   (add-hook 'gtags-mode-hook 
@@ -91,7 +90,7 @@
 			   "--ignore" "jquery.mobile-1.1.0.min.js" 
 			   "--ignore" "jquery.mobile-1.2.0.min.js"  
 			   "--" ))
-  (setq ac-sources '(ac-source-gtags ac-source-words-in-buffer ac-source-php-auto-yasnippets))
+
   (phafi-init-menu)
 
   (setq
@@ -104,6 +103,8 @@
    geben-pause-at-entry-line nil
    geben-show-breakpoints-debugging-only nil)
   (phafi-enable-bokeh-coding-style)
+  (require 'auto-complete)
+  (setq ac-sources '(ac-source-gtags ac-source-words-in-buffer ac-source-php-auto-yasnippets))
   )
 
 (c-add-style

@@ -17,6 +17,7 @@
   :load-path "lisp/geben-1.1.2")
 (use-package ibuffer-sidebar)
 (use-package ag)
+(use-package auto-complete)
 
 (use-package magit)
 (global-set-key (kbd "C-x g") 'magit-status)
