@@ -652,7 +652,7 @@
   (interactive (list (read-string "database name: ")))
   (require 'mysql-query)
   (let (
-	(rootdir (subseq (buffer-file-name) 0 (+ (search "/bokeh/" (buffer-file-name) ) 7)))
+	(rootdir (subseq (buffer-file-name) 0 (+ (cl-search "/bokeh/" (buffer-file-name) :from-end t) 7)))
 	)
     (phafi-replace-in-file "sgbd.config.dbname.*"
 			   (concat "sgbd.config.dbname = " client)
