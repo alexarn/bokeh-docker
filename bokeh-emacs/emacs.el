@@ -13,7 +13,8 @@
 
 (use-package php-mode)
 (use-package php-eldoc)
-(use-package geben)
+(use-package geben
+  :load-path "lisp/geben-1.1.2")
 (use-package ibuffer-sidebar)
 (use-package ag)
 
