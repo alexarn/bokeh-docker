@@ -15,11 +15,7 @@ RUN groupadd --gid ${GROUP_ID} ${USERNAME} \
     && useradd -m --home-dir /home/${USERNAME} -G docker --shell /bin/bash --gid ${GROUP_ID} --uid ${USER_ID} ${USERNAME}
 
 COPY emacs.el /home/${USERNAME}/.emacs
-RUN mkdir -p /home/${USERNAME}/.emacs.d/lisp
-COPY mysql-query.el /home/${USERNAME}/.emacs.d/lisp/
-COPY phafi-mode.el /home/${USERNAME}/.emacs.d/lisp/
-COPY phpunit.el /home/${USERNAME}/.emacs.d/lisp/
-
+ADD lisp /home/${USERNAME}/.emacs.d/lisp
 RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.emacs*
 
 COPY php /usr/local/bin/
