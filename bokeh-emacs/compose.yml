@@ -3,7 +3,7 @@ version: '3.9'
 services:
   emacs:
     build:
-      context: .
+      context: $PWD
       args:
         - GROUP_ID
         - USER_ID
@@ -11,11 +11,24 @@ services:
         - BOKEH_ROOT
         - DOCKER_GROUP_ID
     external_links:
-        - "db"
-        - "php"
-        - "cache"
+      - "db"
+      - "php"
+      - "cache"
     tty: true
     volumes:
-    - "${BOKEH_ROOT}/..:/home/${USERNAME}/dev"
-    - "~/.ssh:/home/${USERNAME}/.ssh"
-    - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${BOKEH_ROOT}/..:/home/${USERNAME}/dev"
+      - "~/.ssh:/home/${USERNAME}/.ssh"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  db:
+    volumes:
+      - "${BOKEH_ROOT}/docker/conf/mariadb:/etc/mysql/conf.d"
+
+  php:
+    volumes:
+      - "${BOKEH_ROOT}:/var/www/html"
+
+  web:
+    volumes:
+      - "${BOKEH_ROOT}/docker/conf/nginx:/etc/nginx/conf.d"
+      - "${BOKEH_ROOT}:/var/www/html"
