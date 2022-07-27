@@ -1,0 +1,9 @@
+#!/bin/bash
+dockerpath="/var/www/html"
+container=$(docker inspect -f '{{ .Name }}' $HOSTNAME| cut -c 2-| sed 's/-emacs-/-php-/')
+command="docker exec -w $dockerpath -it $container su $(whoami) -c \"../autofocus/autofocus $@\""
+echo -e "\n${command}\n"
+
+eval $command
+
+

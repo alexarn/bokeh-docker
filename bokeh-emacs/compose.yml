@@ -27,6 +27,7 @@ services:
   php:
     volumes:
       - "${BOKEH_ROOT}:/var/www/html"
+      - "~/autofocus:/var/www/autofocus"
 
   web:
     volumes:

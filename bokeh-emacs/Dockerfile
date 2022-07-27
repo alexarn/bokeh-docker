@@ -21,6 +21,7 @@ RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.emacs*
 COPY php /usr/local/bin/
 COPY phpunit /usr/local/bin/
 COPY dump_db /usr/local/bin/
+COPY autofocus /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/*
 

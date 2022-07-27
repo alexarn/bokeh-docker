@@ -27,14 +27,15 @@ then
 	info "no HTTP port left"
 	exit 2
     fi
-
+    
     sed -i "s:WEB_PORT=.*:WEB_PORT=$WEB_PORT:" $ENV_DEV
+    sed -i "s:WEB_HOST=.*:WEB_HOST=funky.afi-sa.net:" $ENV_DEV
+    sed -i "s:GROUP_ID=.*:GROUP_ID=$(id -g):" $ENV_DEV
+    sed -i "s:USER_ID=.*:USER_ID=$(id -u):" $ENV_DEV
+    sed -i "s:USERNAME=.*:USERNAME=$(whoami):" $ENV_DEV
 
     echo "" >> $ENV_DEV
     echo "BOKEH_ROOT=$BOKEH_ROOT" >> $ENV_DEV
-    echo "GROUP_ID=$(id -g)" >> $ENV_DEV
-    echo "USER_ID=$(id -u)" >> $ENV_DEV
-    echo "USERNAME=$(whoami)" >> $ENV_DEV
     echo "DOCKER_GROUP_ID=$(cut -d: -f3 < <(getent group docker))" >> $ENV_DEV
 fi
 
