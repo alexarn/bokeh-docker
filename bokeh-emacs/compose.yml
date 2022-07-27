@@ -19,6 +19,7 @@ services:
       - "${BOKEH_ROOT}/..:/home/${USERNAME}/dev"
       - "~/.ssh:/home/${USERNAME}/.ssh"
       - "/var/run/docker.sock:/var/run/docker.sock"
+      - "~/.gitconfig:/home/${USERNAME}/.gitconfig"
 
   db:
     volumes:

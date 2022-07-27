@@ -42,7 +42,7 @@ Si ce n'est pas le cas, il en crée un en copiant docker/.env et calcul ensuite:
 
 GROUP\_ID, USER\_ID et USERNAME permettrons de creer le même utilisateur dans le conteneur emacs qui bénéficiera donc des permissions adéquates sur les volumes montés. 
 
-De plus la configuration ssh de l'utilisateur courant sera montées dans le répertoire de ce même utilisateur dans le conteneur.
+De plus la configuration ssh (~/.ssh/*) et git (~/.gitconfig) de l'utilisateur courant sera montées dans le répertoire de ce même utilisateur dans le conteneur.
 
 DOCKER\_GROUP\_ID permettra de déclarer un groupe identique dans le conteneur emacs.
 
