@@ -10,6 +10,7 @@ services:
         - USERNAME
         - BOKEH_ROOT
         - DOCKER_GROUP_ID
+        - MARIADB_ROOT_PASSWORD
     external_links:
       - "db"
       - "php"

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "show databases"| mysql -uroot -pMARIADB_ROOT_PASSWORD -hdb| tail -n +2| grep -v -e "mysql" -e "information_schema" -e "performance_schema"

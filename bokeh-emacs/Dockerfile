@@ -4,6 +4,7 @@ ARG GROUP_ID
 ARG USERNAME
 ARG USER_ID
 ARG DOCKER_GROUP_ID
+ARG MARIADB_ROOT_PASSWORD
 
 RUN groupadd --system --gid ${DOCKER_GROUP_ID} docker
 
@@ -16,12 +17,16 @@ RUN groupadd --gid ${GROUP_ID} ${USERNAME} \
 
 COPY emacs.el /home/${USERNAME}/.emacs
 ADD lisp /home/${USERNAME}/.emacs.d/lisp
+RUN sed -i "s:MARIADB_ROOT_PASSWORD:${MARIADB_ROOT_PASSWORD}:" /home/${USERNAME}/.emacs
 RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.emacs*
 
 COPY php /usr/local/bin/
 COPY phpunit /usr/local/bin/
 COPY dump_db /usr/local/bin/
-COPY autofocus /usr/local/bin/
+RUN sed -i "s:MARIADB_ROOT_PASSWORD:${MARIADB_ROOT_PASSWORD}:" /usr/local/bin/dump_db
+COPY show_db /usr/local/bin/
+RUN sed -i "s:MARIADB_ROOT_PASSWORD:${MARIADB_ROOT_PASSWORD}:" /usr/local/bin/show_db
+copy autofocus /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/*
 

@@ -648,40 +648,10 @@
   )
 
 
-
 (defun phafi-select-db (client)
-  (interactive (list (read-string "database name: ")))
-  (require 'mysql-query)
-  (let (
-	(rootdir (subseq (buffer-file-name) 0 (+ (cl-search "/bokeh/" (buffer-file-name) :from-end t) 7)))
-	)
-    (phafi-replace-in-file "sgbd.config.dbname.*"
-			   (concat "sgbd.config.dbname = " client)
-			   (concat rootdir "config.ini"))
-    (phafi-replace-in-file "integration_base.*"
-			   (concat "integration_base=" client)
-			   (concat rootdir "cosmogramme/config.php"))
-    (mysql-query 
-     (concat 
-      "connect " client ";"
-      "update variables set valeur='./cosmogramme/fichiers/cache/' where clef='cache_path';"  
-      "update variables set valeur='./cosmogramme/fichiers/log/' where clef='log_path';"
-      "update variables set valeur='./cosmogramme/fichiers/transferts/' where clef='ftp_path';"
-      "update variables set valeur='./cosmogramme/fichiers/integration/' where clef='integration_path';"
-      "update variables set valeur='admin' where clef='admin_login';"  
-      "update variables set valeur='admin' where clef='admin_pwd';"
-      "update mysql.proc set definer='root@localhost';"
-      "replace into bib_admin_var (clef, valeur) values('ENABLE_COLLABORATIVE_BROWSING', '0');"
-      "replace into bib_admin_var (clef, valeur) values('STATUS_REPORT_PUSH_URL', 'no');"
-      "replace into bib_admin_var (clef, valeur) values('FORCE_HTTPS', '0');"
-      "drop trigger datemaj_notices_update;")
-     mysql-connection-info)
-
-
-    (async-shell-command 
-     (concat "cd " (phafi-root-dir) ";"
-	     "php ./scripts/upgrade_db.php"))
-    )
+  (interactive (list (completing-read "DB: " (process-lines "show_db"))))
+  (async-shell-command
+   (concat "php ./scripts/select_db.php " client))
   )
 
 

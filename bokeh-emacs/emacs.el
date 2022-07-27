@@ -82,3 +82,8 @@
 (require 'yasnippet)
 (add-to-list 'yas-snippet-dirs (concat userpath "/scripts/emacs/yasnippet/snippets/text-mode/"))
 (yas-global-mode 1)
+
+(defun dump_db(dbname)
+  (interactive (list (read-string "DB name: ")))
+  (async-shell-command
+   (concat "bash dump_db " dbname)))

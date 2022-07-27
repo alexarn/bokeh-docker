@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dbname=`echo $1|xargs|tr -d '\r'`
-password="password"
+password="MARIADB_ROOT_PASSWORD"
 today=`date +%Y-%m-%d`
 target_path=/tmp/${dbname}.sql.gz
 
