@@ -21,6 +21,7 @@ RUN sed -i "s:MARIADB_ROOT_PASSWORD:${MARIADB_ROOT_PASSWORD}:" /home/${USERNAME}
 RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.emacs*
 
 COPY php /usr/local/bin/
+COPY pman /usr/local/bin/
 COPY phpunit /usr/local/bin/
 COPY dump_db /usr/local/bin/
 RUN sed -i "s:MARIADB_ROOT_PASSWORD:${MARIADB_ROOT_PASSWORD}:" /usr/local/bin/dump_db

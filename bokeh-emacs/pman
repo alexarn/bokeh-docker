@@ -1,0 +1,6 @@
+#!/bin/bash
+dockerpath="/var/www/html"
+container=$(docker inspect -f '{{ .Name }}' $HOSTNAME| cut -c 2-| sed 's/-emacs-/-php-/')
+command="docker exec -w $dockerpath $container pman $*"
+
+eval $command
