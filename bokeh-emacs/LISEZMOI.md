@@ -90,7 +90,7 @@ Vous pouvez importer une sauvegarde d'une base client avec dump\_db.
 ### Démarrer emacs
 
 ```sh
-[devbokeh@9a76c89632 ~]$ TERM=xterm-256color emacs
+[devbokeh@9a76c89632 ~]$ emacs
 ```
 
 Au premier lancement, emacs s'assurera de télécharger et d'installer les extensions requises ce qui peut prendre un peu de temps (cf. emacs.el).

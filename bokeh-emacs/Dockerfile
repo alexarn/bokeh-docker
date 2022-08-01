@@ -31,4 +31,6 @@ copy autofocus /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/*
 
+COPY emacs-env.sh /etc/profile.d/
+
 ENV LANG fr_FR.UTF-8
