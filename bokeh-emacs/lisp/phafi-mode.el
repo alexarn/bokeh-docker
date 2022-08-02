@@ -96,7 +96,7 @@
   (setq
    magit-diff-options '("-w")
    flymake-mode t
-   compilation-error-regexp-alist  '(	("^\\(/.*\\):\\([0-9]+\\)$" 1 2)
+   compilation-error-regexp-alist  '(	("^\\(~?/.*\\):\\([0-9]+\\)$" 1 2)
 					("^.* \\(/.*\\):\\([0-9]+\\)" 1 2)
 					("PHP\s+[0-9]+\. [^/]* \\([^:]+\\):\\([0-9]+\\)" 1 2)
 					("in \\(/.*\\) on line \\([0-9]+\\)" 1 2) )
@@ -237,7 +237,8 @@
 			command-filter 
 			" " 
 			filename 
-			testdox-option))
+			testdox-option
+			"| sed 's/\\\/var\\\/www\\\/html/~\\\/dev\\\/bokeh/'"))
 
     
     (if (buffer-modified-p) (save-buffer))
