@@ -14,7 +14,6 @@
 (use-package php-mode)
 (use-package geben
   :load-path "lisp/geben-1.1.2")
-(use-package ibuffer-sidebar)
 (use-package ag)
 (use-package auto-complete)
 
@@ -30,6 +29,8 @@
  '(menu-bar-mode nil)
  '(show-paren-mode t)
  '(geben-pause-at-entry-line nil)
+ '(size-indication-mode t)
+ '(column-number-mode t)
  )
 
 
@@ -86,3 +87,17 @@
   (interactive (list (read-string "DB name: ")))
   (async-shell-command
    (concat "bash dump_db " dbname)))
+
+
+(use-package ibuffer-sidebar
+  :bind (("C-x C-b" . ibuffer-sidebar-toggle-sidebar))
+  :ensure nil
+  :commands (ibuffer-sidebar-toggle-sidebar))
+
+(require 'winner)
+(winner-mode)
+
+(global-set-key (kbd "C-c f") 'next-multiframe-window)
+(global-set-key (kbd "C-c b") 'previous-multiframe-window)
+
+(require 'uniquify)
