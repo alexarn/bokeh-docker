@@ -88,7 +88,7 @@
   (async-shell-command
    (concat "bash dump_db " dbname)))
 
-
+(use-package ibuffer-sidebar)
 (use-package ibuffer-sidebar
   :bind (("C-x C-b" . ibuffer-sidebar-toggle-sidebar))
   :ensure nil
