@@ -27,6 +27,9 @@ services:
       - "${BOKEH_ROOT}/docker/conf/mariadb:/etc/mysql/conf.d"
 
   php:
+# To use another Dockerfile that Bokeh defaults, uncomment
+#    build:
+#      context: $PWD/../afi-php-7.4.14-dev
     volumes:
       - "${BOKEH_ROOT}:/var/www/html"
       - "~/autofocus:/var/www/autofocus"
