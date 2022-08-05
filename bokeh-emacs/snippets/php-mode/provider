@@ -1,0 +1,15 @@
+#contributor : Ghislain Loas <gloas@afi-sa.fr> & Arthur Suzuki <>
+#name : provider
+# --
+public function ${provider}() : array {
+  return [];
+}
+
+
+  /**
+  * @test
+  * @dataProvider ${provider}
+  */
+public function ${context}Should${Expectation}(${expected}) {
+  $0
+}

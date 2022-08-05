@@ -1,0 +1,7 @@
+#contributor : Laurent Laffont <laurent.laffont@gmail.com>
+#name : should ...(...)
+# --
+/** @test */
+public function ${context}Should${Expectation}() {
+   $0
+}

@@ -1,0 +1,4 @@
+#contributor : Ghislain Loas <gloas@afi-sa.fr>
+#name : body
+# --
+$this->_response->getBody()$0

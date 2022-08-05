@@ -4,7 +4,12 @@ Je fourni un conteneur archlinux avec emacs et l'outillage nécessaire au dev Bo
 
 Je me base sur la composition docker fournie dans le répertoire /docker du code de Bokeh.
 
-Je nécessite donc que vous ayez au préalable un clone du dépôt Bokeh à l'endroit de votre choix.
+Je nécessite donc que vous ayez au préalable un clone du dépôt Bokeh à l'endroit de votre choix (actuellement nécessite que le répertoire se nomme bokeh).
+
+```sh
+mkdir -p unclient/bokeh
+git clone git@git.afi-sa.net:afi/opacce.git unclient/bokeh
+```
 
 Si vous voulez utiliser les facilités fournies par autofocus, je prévois de trouver un clone du dépôt d'autofocus dans ~/autofocus, n'oubliez pas de configurer votre clé d'API redmine.
 

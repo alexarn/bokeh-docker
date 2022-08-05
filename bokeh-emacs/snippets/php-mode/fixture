@@ -1,0 +1,6 @@
+#contributor : Patrick Barroca <pbarroca@afi-sa.fr>
+#contributor : Ghislain Loas <gloas@afi-sa.fr>
+# --
+$this->fixture(${class_name}::class,
+  ['id' => ${id},
+  $0]);

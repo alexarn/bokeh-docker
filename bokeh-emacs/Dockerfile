@@ -17,6 +17,8 @@ RUN groupadd --gid ${GROUP_ID} ${USERNAME} \
 
 COPY emacs.el /home/${USERNAME}/.emacs
 ADD lisp /home/${USERNAME}/.emacs.d/lisp
+ADD snippets /home/${USERNAME}/.emacs.d/snippets
+
 RUN sed -i "s:MARIADB_ROOT_PASSWORD:${MARIADB_ROOT_PASSWORD}:" /home/${USERNAME}/.emacs
 RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.emacs*
 
@@ -32,5 +34,6 @@ copy autofocus /usr/local/bin/
 RUN chmod +x /usr/local/bin/*
 
 COPY emacs-env.sh /etc/profile.d/
+
 
 ENV LANG fr_FR.UTF-8

@@ -236,9 +236,9 @@
 			" "
 			command-filter 
 			" " 
-			filename 
+			filename
 			testdox-option
-			"| sed 's/\\\/var\\\/www\\\/html/~\\\/dev\\\/bokeh/'"))
+			"| sed 's/\\\/var\\\/www\\\/html/" (replace-regexp-in-string "/" "\\\\/" (phafi-root-dir)) "/'"))
 
     
     (if (buffer-modified-p) (save-buffer))
