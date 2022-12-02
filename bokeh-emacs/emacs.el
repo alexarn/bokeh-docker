@@ -20,6 +20,10 @@
 (use-package magit)
 (global-set-key (kbd "C-x g") 'magit-status)
 
+(global-set-key [f8] 'next-error)
+(global-set-key [f9] 'geben-end)
+
+(defalias 'yes-or-no-p 'y-or-n-p) 
 (use-package rainbow-delimiters)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
@@ -101,3 +105,4 @@
 (global-set-key (kbd "C-c b") 'previous-multiframe-window)
 
 (require 'uniquify)
+(load-file ".emacs.d/custom.el")

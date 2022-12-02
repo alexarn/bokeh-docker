@@ -15,12 +15,14 @@ RUN pacman --noconfirm -Scc
 RUN groupadd --gid ${GROUP_ID} ${USERNAME} \
     && useradd -m --home-dir /home/${USERNAME} -G docker --shell /bin/bash --gid ${GROUP_ID} --uid ${USER_ID} ${USERNAME}
 
-COPY emacs.el /home/${USERNAME}/.emacs
+COPY emacs.el /home/${USERNAME}/.emacs.d/init.el
 ADD lisp /home/${USERNAME}/.emacs.d/lisp
 ADD snippets /home/${USERNAME}/.emacs.d/snippets
 
-RUN sed -i "s:MARIADB_ROOT_PASSWORD:${MARIADB_ROOT_PASSWORD}:" /home/${USERNAME}/.emacs
-RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.emacs*
+RUN sed -i "s:MARIADB_ROOT_PASSWORD:${MARIADB_ROOT_PASSWORD}:" /home/${USERNAME}/.emacs.d/init.el
+RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.emacs.d
+RUN chmod -R 777  /home/${USERNAME}/.emacs.d
+RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.emacs.d/*
 
 COPY php /usr/local/bin/
 COPY pman /usr/local/bin/
