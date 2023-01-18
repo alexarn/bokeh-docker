@@ -8,8 +8,8 @@ ARG MARIADB_ROOT_PASSWORD
 
 #RUN groupadd --system --gid ${DOCKER_GROUP_ID} docker
 
-RUN pacman -Syy --noconfirm archlinux-keyring
-RUN pacman-key --refresh-keys
+#RUN pacman -Syy --noconfirm archlinux-keyring
+#RUN pacman-key --refresh-keys
 RUN pacman -Suy --noconfirm emacs-nox git the_silver_searcher wget openssh mariadb-clients global docker yaz
 
 RUN pacman --noconfirm -Scc
