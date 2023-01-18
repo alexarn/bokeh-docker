@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  vim:
+    build:
+      context: $PWD
+      args:
+        - GROUP_ID
+        - USER_ID
+        - USERNAME
+        - BOKEH_ROOT
+        - DOCKER_GROUP_ID
+        - MARIADB_ROOT_PASSWORD
+    external_links:
+      - "db"
+      - "php"
+      - "cache"
+    tty: true
+    volumes:
+      - "${BOKEH_ROOT}/..:/home/${USERNAME}/dev"
+      - "~/.ssh:/home/${USERNAME}/.ssh"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "~/.gitconfig:/home/${USERNAME}/.gitconfig"
+
+  db:
+    volumes:
+      - "${BOKEH_ROOT}/docker/conf/mariadb:/etc/mysql/conf.d"
+
+  php:
+# To use another Dockerfile that Bokeh defaults, uncomment
+#    build:
+#      context: $PWD/../afi-php-7.4.14-dev
+    volumes:
+      - "${BOKEH_ROOT}:/var/www/html"
+      - "~/autofocus:/var/www/autofocus"
+
+  web:
+    volumes:
+      - "${BOKEH_ROOT}/docker/conf/nginx:/etc/nginx/conf.d"
+      - "${BOKEH_ROOT}:/var/www/html"

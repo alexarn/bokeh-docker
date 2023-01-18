@@ -1,0 +1,11 @@
+#!/bin/bash
+pwd=$(pwd)
+dockerpath=$(echo $pwd| sed -e 's/.*bokeh/\/var\/www\/html/g')
+args=$(echo ${*}| sed -e 's/\/[0-9a-zA-Z\/]\+\/bokeh/\/var\/www\/html/g')
+container=$(docker inspect -f '{{ .Name }}' $HOSTNAME| cut -c 2-| sed 's/-emacs-/-php-/')
+command="docker exec -w $dockerpath -it $container phpunit ${args}"
+echo -e "\n${command}\n"
+
+eval $command
+
+

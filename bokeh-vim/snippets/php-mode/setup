@@ -1,0 +1,7 @@
+#contributor : Laurent Laffont <llaffont@afi-sa.fr>
+#name : funct ...(...)
+# --
+public function setUp() {
+  parent::setUp();
+  $0
+}

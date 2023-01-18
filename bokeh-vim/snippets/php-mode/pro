@@ -1,0 +1,5 @@
+#contributor : Ghislain Loas <gloas@afi-sa.fr>
+#name : pro
+# --
+protected function _$0() : {
+}

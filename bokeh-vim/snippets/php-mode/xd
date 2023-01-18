@@ -1,0 +1,4 @@
+#contributor : Ghislain Loas <gloas@afi-sa.fr>
+#name : xd
+# --
+xdebug_break();$0

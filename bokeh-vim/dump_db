@@ -1,0 +1,63 @@
+#!/bin/bash
+
+dbname=`echo $1|xargs|tr -d '\r'`
+password="MARIADB_ROOT_PASSWORD"
+today=`date +%Y-%m-%d`
+target_path=/tmp/${dbname}.sql.gz
+
+BACKUP_URL="https://backup.afi-sa.net/dbs/Mysql/Opac3/Daily/DIRECTORY/${dbname}_FILEDATE_OPAC3_MyISAM_backup.sql.gz"
+
+echo $today
+echo $target_path
+
+function load_dump() {
+    chmod ugo+rw $target_path
+    mysql -hdb -uroot -p$password -e "drop database if exists \`$dbname\`; create database \`$dbname\`;"
+    zcat $target_path |mysql -hdb -uroot -p$password ${dbname} 
+}
+
+
+function detect_content_type() {
+    local url=$1
+    local content_type=""
+    while IFS=':' read key value; do
+	if [[ "Content-Type" == "$key" ]]; then
+	    content_type="$value"
+	    break
+	fi
+    done < <(curl -sI $url)
+    echo "$content_type"
+}
+
+
+function download_and_load() {
+    local day=$1
+    local url=$2
+    local content_type=$(detect_content_type $url | xargs)
+    if [[ "application/octet-stream" == $(cut -c 1-24 <<< $content_type) ]]; then
+	wget -O $target_path $url
+	if [[ `echo "$?"` == 0 ]]; then
+	    load_dump $1
+	    echo "dump from $day completed"
+	    exit 0
+	fi
+    fi
+}
+
+
+function dump_day() {
+    local backup_dir=`date --date="$1" +%d-%m-%Y`
+    local backup_url=`sed 's/DIRECTORY/'$backup_dir'/' <<< $BACKUP_URL`
+    
+    download_and_load $1 $(sed 's/FILEDATE/'`date --date="$1" +%Y%m%d`'/' <<< $backup_url)
+    download_and_load $1 $(sed 's/FILEDATE/'`date --date="$1 -1 day" +%Y%m%d`'/' <<< $backup_url)
+}
+
+
+dump_day $today
+dump_day `date --date="$today -1 day" +%Y-%m-%d`
+dump_day `date --date="$today -2 days" +%Y-%m-%d`
+dump_day `date --date="$today -3 days" +%Y-%m-%d`
+
+echo "Could not dump"
+exit 1

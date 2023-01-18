@@ -1,0 +1,6 @@
+#contributor : Patrick Barroca <pbarroca@afi-sa.fr>
+#name : __construct ...
+# --
+public function __construct() {
+  $0
+}

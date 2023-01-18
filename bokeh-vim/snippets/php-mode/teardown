@@ -1,0 +1,7 @@
+#contributor : Ghislain Loas <gloas@afi-sa.fr>
+#name : funct ...(...)
+# --
+public function tearDown() {
+  $0
+  parent::tearDown();
+}
