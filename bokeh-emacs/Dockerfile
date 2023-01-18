@@ -6,7 +6,7 @@ ARG USER_ID
 ARG DOCKER_GROUP_ID
 ARG MARIADB_ROOT_PASSWORD
 
-RUN groupadd --system --gid ${DOCKER_GROUP_ID} docker
+#RUN groupadd --system --gid ${DOCKER_GROUP_ID} docker
 
 RUN pacman -Syy --noconfirm archlinux-keyring
 RUN pacman-key --refresh-keys
